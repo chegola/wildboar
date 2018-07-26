@@ -5,6 +5,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { LineLogin } from './line.model';
 
 @Component({
     selector: 'jhi-login-modal',
@@ -84,4 +85,15 @@ export class JhiLoginModalComponent implements AfterViewInit {
         this.activeModal.dismiss('to state requestReset');
         this.router.navigate(['/reset', 'request']);
     }
+
+    gotoLine() {
+        this.getLineLoginUrl();
+    }
+
+    private getLineLoginUrl() {
+        this.loginService.getLineLoginUrl().subscribe((res: LineLogin) => {
+            window.location.href = res.lineUrl;
+        });
+    }
+
 }

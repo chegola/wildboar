@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Rx';
 import { JhiLanguageService } from 'ng-jhipster';
 
+import { SERVER_API_URL } from 'app/app.constants';
 import { Principal } from '../auth/principal.service';
 import { AuthServerProvider } from '../auth/auth-jwt.service';
 
@@ -9,7 +12,8 @@ export class LoginService {
     constructor(
         private languageService: JhiLanguageService,
         private principal: Principal,
-        private authServerProvider: AuthServerProvider
+        private authServerProvider: AuthServerProvider,
+        private http: HttpClient
     ) {}
 
     login(credentials, callback?) {
@@ -45,4 +49,13 @@ export class LoginService {
         this.authServerProvider.logout().subscribe();
         this.principal.authenticate(null);
     }
+
+    getLineLoginUrl(): Observable<any> {
+        return this.http.get(SERVER_API_URL  + 'api/line/lineUrl');
+    }
+
+    authFromLINE(): Observable<any> {
+        return this.http.get(SERVER_API_URL + 'api/line/authLine');
+    }
+
 }

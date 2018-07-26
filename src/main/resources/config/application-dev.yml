@@ -50,8 +50,8 @@ spring:
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:postgresql://localhost:5432/wildboar
-        username: wildboar
-        password:
+        username: postgres
+        password: 123456
     jpa:
         database-platform: io.github.jhipster.domain.util.FixedPostgreSQL82Dialect
         database: POSTGRESQL
@@ -148,4 +148,7 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+    line:
+        successURL: 'http://localhost:9000/#/line-auth'
+        failedURL: 'http://localhost:9000/#/line-cancel'
