@@ -1,0 +1,24 @@
+
+{
+    "wildboarApp": {
+        "student" : {
+            "home": {
+                "title": "Students",
+                "createLabel": "สร้าง Student",
+                "createOrEditLabel": "สร้างหรือแก้ไข Student"
+            },
+            "created": "Student ถูกสร้างด้วย {{ param }}",
+            "updated": "Student ถูกแก้ไขด้วย {{ param }}",
+            "deleted": "Student ถูกลบด้วย {{ param }}",
+            "delete": {
+                "question": "คุณต้องการที่จะลบ Student {{ id }}?"
+            },
+            "detail": {
+                "title": "Student"
+            },
+            "name": "Name",
+            "surname": "Surname",
+            "studentId": "Student Id"
+        }
+    }
+}

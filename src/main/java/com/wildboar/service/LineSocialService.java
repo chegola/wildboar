@@ -60,7 +60,7 @@ public class LineSocialService {
 
 	private User createUserIfNotExist(String langKey,String imageUrl, String userName, String providerUserId, String email) {
 		
-		SocialUserConnection socialUserConnection = socialUserConnectionReository
+		final SocialUserConnection socialUserConnection = socialUserConnectionReository
 														.findOneByProviderIdAndProviderUserId("LINE", providerUserId);
 		if (socialUserConnection != null) {
 			Optional <User> user = userRepository.findOneByLogin(socialUserConnection.getUserId().toLowerCase());
@@ -85,8 +85,8 @@ public class LineSocialService {
             throw new BadRequestAlertException("Cannot create LINE user because login are null","userManagement","emailnull");
             // throw new IllegalArgumentException("LINE login cannot be null");
         }
-        if (userRepository.findOneByLogin(userName).isPresent()) {
-            log.error("Cannot create LINE user because login already exist, login -> {}", userName);
+        if (userRepository.findOneByLogin(providerUserId).isPresent()) {
+            log.error("Cannot create LINE user because login already exist, login -> {}", providerUserId);
             throw new BadRequestAlertException("Cannot create LINE user because login are null","userManagement","duplicatelogin");
             // throw new IllegalArgumentException("LINE cannot be with an existing login");
         }
@@ -99,14 +99,14 @@ public class LineSocialService {
         	}        	
         }
         
-        String login = userName.toLowerCase(Locale.ENGLISH);
-        String encryptedPassword = passwordEncoder.encode(RandomStringUtils.random(10));
-        Set<Authority> authorities = new HashSet<>(1);
-        Authority authority = new Authority();
+        final String login = providerUserId;
+        final String encryptedPassword = passwordEncoder.encode(RandomStringUtils.random(10));
+        final Set<Authority> authorities = new HashSet<>(1);
+        final Authority authority = new Authority();
         authority.setName(AuthoritiesConstants.USER);
 		authorities.add(authority);
 		
-        User newUser = new User();
+        final User newUser = new User();
         newUser.setLogin(login);
         newUser.setPassword(encryptedPassword);
         newUser.setFirstName(userName);
@@ -115,9 +115,7 @@ public class LineSocialService {
         newUser.setActivated(true);
         newUser.setAuthorities(authorities);
         newUser.setLangKey(langKey);
-        // newUser.setImageUrl(applicationProperties.getDefault().getUserImageURL()); // default as DEFAULT picture
-        // newUser.setShowPic(false);
-        // newUser.setSendLine(false);
+        newUser.setImageUrl(imageUrl); 
         return userRepository.save(newUser);
     }
 
@@ -130,7 +128,7 @@ public class LineSocialService {
 		}
 		
 		socialUserConnection = new SocialUserConnection();
-		socialUserConnection.setUserId(login.toLowerCase(Locale.ENGLISH));
+		socialUserConnection.setUserId(StringUtils.lowerCase(providerUserId, Locale.ENGLISH));
 		socialUserConnection.setAccessToken(accessToken);
 		socialUserConnection.setProviderId("LINE");
 		socialUserConnection.setProviderUserId(providerUserId);
