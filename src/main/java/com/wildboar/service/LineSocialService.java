@@ -65,12 +65,15 @@ public class LineSocialService {
 		if (socialUserConnection != null) {
 			Optional <User> user = userRepository.findOneByLogin(socialUserConnection.getUserId().toLowerCase());
 			if (user.isPresent()) {
-				user.get().setImageUrl(imageUrl);
-				// just to update email
-				if (StringUtils.isNotBlank(email)) {
+				boolean profileShouldBeUpdated = false;
+				if (!StringUtils.equals(user.get().getImageUrl(), imageUrl) || (!StringUtils.equals(user.get().getEmail(), email))) {
+					profileShouldBeUpdated = true;					
+				}				
+				if (profileShouldBeUpdated) {
+					user.get().setImageUrl(imageUrl);
 					user.get().setEmail(email);
-				}
-				userRepository.save(user.get());
+					userRepository.save(user.get());	
+				}					
 				return user.get();
 			} else {
 				// throw new IllegalArgumentException("Can not find user in jhi_user");
