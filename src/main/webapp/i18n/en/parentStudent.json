@@ -1,0 +1,23 @@
+
+{
+    "wildboarApp": {
+        "parentStudent" : {
+            "home": {
+                "title": "Parent Students",
+                "createLabel": "Create a new Parent Student",
+                "createOrEditLabel": "Create or edit a Parent Student"
+            },
+            "created": "A new Parent Student is created with identifier {{ param }}",
+            "updated": "A Parent Student is updated with identifier {{ param }}",
+            "deleted": "A Parent Student is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Parent Student {{ id }}?"
+            },
+            "detail": {
+                "title": "Parent Student"
+            },
+            "user": "User",
+            "student": "Student"
+        }
+    }
+}

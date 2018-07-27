@@ -1,0 +1,33 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="parentStudent">
+            <h2><span jhiTranslate="wildboarApp.parentStudent.detail.title">Parent Student</span> {{parentStudent.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="wildboarApp.parentStudent.user">User</span></dt>
+                <dd>
+                    {{parentStudent.userLogin}}
+                </dd>
+                <dt><span jhiTranslate="wildboarApp.parentStudent.student">Student</span></dt>
+                <dd>
+                    <div *ngIf="parentStudent.studentId">
+                        <a [routerLink]="['/student', parentStudent.studentId, 'view']">{{parentStudent.studentName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/parent-student', parentStudent.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

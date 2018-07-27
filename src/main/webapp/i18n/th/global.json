@@ -8,6 +8,7 @@
             "entities": {
                 "main": "Entities",
                 "student": "Student",
+                "parentStudent": "Parent Student",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

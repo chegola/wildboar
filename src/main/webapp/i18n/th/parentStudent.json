@@ -1,0 +1,23 @@
+
+{
+    "wildboarApp": {
+        "parentStudent" : {
+            "home": {
+                "title": "Parent Students",
+                "createLabel": "สร้าง Parent Student",
+                "createOrEditLabel": "สร้างหรือแก้ไข Parent Student"
+            },
+            "created": "Parent Student ถูกสร้างด้วย {{ param }}",
+            "updated": "Parent Student ถูกแก้ไขด้วย {{ param }}",
+            "deleted": "Parent Student ถูกลบด้วย {{ param }}",
+            "delete": {
+                "question": "คุณต้องการที่จะลบ Parent Student {{ id }}?"
+            },
+            "detail": {
+                "title": "Parent Student"
+            },
+            "user": "User",
+            "student": "Student"
+        }
+    }
+}
