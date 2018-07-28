@@ -10,6 +10,9 @@ import org.springframework.integration.annotation.InboundChannelAdapter;
 import org.springframework.integration.core.MessageSource;
 import org.springframework.messaging.support.GenericMessage;
 
+import com.wildboar.messaging.ConsumerChannel;
+import com.wildboar.messaging.ProducerChannel;
+
 /**
  * Configures Spring Cloud Stream support.
  *
@@ -18,7 +21,7 @@ import org.springframework.messaging.support.GenericMessage;
  * See http://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/
  * for the official Spring Cloud Stream documentation.
  */
-@EnableBinding(value = { Source.class })
+@EnableBinding(value = { Source.class, ProducerChannel.class, ConsumerChannel.class })
 public class MessagingConfiguration {
 
     /**

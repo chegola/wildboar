@@ -47,6 +47,11 @@ spring:
             bindings:
                 output:
                     destination: topic-jhipster
+                messageChannel: 
+                    destination: wb-master 
+                    content-type: application/json 
+                subscribableChannel: 
+                    destination: wb-master     
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:postgresql://localhost:5432/wildboar
