@@ -129,4 +129,7 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+    line:
+        line-bot-channel-secret: WB_LINE_BOT_CHANNEL_SECRET
+        line-bot-channel-token: WB_LINE_BOT_CHANNEL_TOKEN

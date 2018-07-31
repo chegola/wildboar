@@ -106,8 +106,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     }
 
     // Lowercase the login before saving it in database
+    // Che - override this behavior becasue we are using LINE user Id as Login
     public void setLogin(String login) {
-        this.login = StringUtils.lowerCase(login, Locale.ENGLISH);
+        // this.login = StringUtils.lowerCase(login, Locale.ENGLISH);
+    	this.login = login;
     }
 
     public String getPassword() {

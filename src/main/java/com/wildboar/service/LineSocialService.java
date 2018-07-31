@@ -1,7 +1,6 @@
 package com.wildboar.service;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -13,11 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.wildboar.config.ApplicationProperties;
 import com.wildboar.domain.Authority;
 import com.wildboar.domain.SocialUserConnection;
 import com.wildboar.domain.User;
-import com.wildboar.repository.AuthorityRepository;
 import com.wildboar.repository.SocialUserConnectionRepository;
 import com.wildboar.repository.UserRepository;
 import com.wildboar.security.AuthoritiesConstants;
@@ -31,7 +28,6 @@ public class LineSocialService {
 
 	private final Logger log = LoggerFactory.getLogger(LineSocialService.class);
 	
-	private final AuthorityRepository authorityRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -39,17 +35,13 @@ public class LineSocialService {
     
     private final SocialUserConnectionRepository socialUserConnectionReository;
     
-    private final ApplicationProperties applicationProperties;
     
    
-    public LineSocialService(SocialUserConnectionRepository socialUserConnectionReository, AuthorityRepository authorityRepository,
-            PasswordEncoder passwordEncoder, UserRepository userRepository, UserDetailsService userDetailsService,
-            ApplicationProperties applicationProperties) {
-        this.authorityRepository = authorityRepository;
+    public LineSocialService(SocialUserConnectionRepository socialUserConnectionReository,
+            PasswordEncoder passwordEncoder, UserRepository userRepository, UserDetailsService userDetailsService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.socialUserConnectionReository = socialUserConnectionReository;
-        this.applicationProperties = applicationProperties;
     }
     
 
@@ -63,7 +55,7 @@ public class LineSocialService {
 		final SocialUserConnection socialUserConnection = socialUserConnectionReository
 														.findOneByProviderIdAndProviderUserId("LINE", providerUserId);
 		if (socialUserConnection != null) {
-			Optional <User> user = userRepository.findOneByLogin(socialUserConnection.getUserId().toLowerCase());
+			Optional <User> user = userRepository.findOneByLogin(socialUserConnection.getUserId());
 			if (user.isPresent()) {
 				boolean profileShouldBeUpdated = false;
 				if (!StringUtils.equals(user.get().getImageUrl(), imageUrl) || (!StringUtils.equals(user.get().getEmail(), email))) {
@@ -131,7 +123,7 @@ public class LineSocialService {
 		}
 		
 		socialUserConnection = new SocialUserConnection();
-		socialUserConnection.setUserId(StringUtils.lowerCase(providerUserId, Locale.ENGLISH));
+		socialUserConnection.setUserId(providerUserId);
 		socialUserConnection.setAccessToken(accessToken);
 		socialUserConnection.setProviderId("LINE");
 		socialUserConnection.setProviderUserId(providerUserId);

@@ -21,6 +21,7 @@ public class ApplicationProperties {
 		private String successURL;
 		private String failedURL;
 		private String lineBotChannelSecret;
+		private String lineBotChannelToken;
 
 		public String getLineBotChannelSecret() {
 			return System.getenv(lineBotChannelSecret);
@@ -38,7 +39,6 @@ public class ApplicationProperties {
 			this.lineBotChannelToken = lineBotChannelToken;
 		}
 
-		private String lineBotChannelToken;
 
 		public String getSuccessURL() {
 			return successURL;
