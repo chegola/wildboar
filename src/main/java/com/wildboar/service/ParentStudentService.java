@@ -28,7 +28,15 @@ public interface ParentStudentService {
      */
     Page<ParentStudentDTO> findAll(Pageable pageable);
 
+    /**
+     * Get all the parentStudents by CurrentUser.
+     *
+     * @param pageable the pagination information
+     * @return the list of entities
+     */
+    Page<ParentStudentDTO> findByUserIsCurrentUser(Pageable pageable);
 
+        
     /**
      * Get the "id" parentStudent.
      *

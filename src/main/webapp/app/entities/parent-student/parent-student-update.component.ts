@@ -26,6 +26,8 @@ export class ParentStudentUpdateComponent implements OnInit {
 
     account: Account;
 
+    parentStudents: IParentStudent[];
+
     constructor(
         private jhiAlertService: JhiAlertService,
         private parentStudentService: ParentStudentService,
@@ -42,6 +44,7 @@ export class ParentStudentUpdateComponent implements OnInit {
         });
         this.principal.identity().then(account => {
             this.account = account;
+            this.loadByCurrentUser();
         });
         // this.userService.query().subscribe(
         //     (res: HttpResponse<IUser[]>) => {
@@ -57,8 +60,21 @@ export class ParentStudentUpdateComponent implements OnInit {
         );
     }
 
+    loadByCurrentUser() {
+        this.parentStudentService
+            .findByParent()
+            .subscribe(
+                (res: HttpResponse<IParentStudent[]>) => this.loadParentStudent(res.body),
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+    }
+
     previousState() {
         window.history.back();
+    }
+
+    loadParentStudent(data: IParentStudent[]) {
+        this.parentStudents = data;
     }
 
     save() {
@@ -85,7 +101,6 @@ export class ParentStudentUpdateComponent implements OnInit {
 
     private onSaveSuccess() {
         this.isSaving = false;
-        this.previousState();
     }
 
     private onSaveError() {

@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
-import { TranslateService } from '@ngx-translate/core';
 
 import { LoginService } from '../../core/login/login.service';
 import { CookieService } from 'ngx-cookie';
-import { Register } from '../register/register.service';
 import { StateStorageService } from '../../core/auth/state-storage.service';
 import { LineLogin } from '../../shared/login/line.model';
 
@@ -18,12 +16,9 @@ export class SocialAuthComponent implements OnInit {
         private loginService: LoginService,
         private cookieService: CookieService,
         private router: Router,
-        private registerService: Register,
         private route: ActivatedRoute,
         private eventManager: JhiEventManager,
-        private stateStorageService: StateStorageService,
-        private jhiAlertService: JhiAlertService,
-        private translateService: TranslateService
+        private stateStorageService: StateStorageService
     ) {
     }
 
@@ -40,7 +35,7 @@ export class SocialAuthComponent implements OnInit {
                                 content: 'Sending Authentication Success'
                             });
                             this.stateStorageService.storeUrl(null);
-                            this.router.navigate(['']);
+                            this.router.navigate(['settings']);
                         }, () => {
          //                   this.openSnackBar(this.translateService.instant('login.messages.error.authentication'))
                             this.router.navigate(['']);

@@ -98,6 +98,23 @@ public class ParentStudentResource {
     }
 
     /**
+     * GET  /parent-students/parent : get all Students belong to Parent.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of parentStudents in body
+     */
+    @GetMapping("/parent-students/parent")
+    @Timed
+    public ResponseEntity<List<ParentStudentDTO>> getAllParentStudentsBy(Pageable pageable) {
+        log.debug("REST request to get a page of ParentStudents of current user");
+        Page<ParentStudentDTO> page = parentStudentService.findByUserIsCurrentUser(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/parent-students");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+    
+    
+    
+    /**
      * GET  /parent-students/:id : get the "id" parentStudent.
      *
      * @param id the id of the parentStudentDTO to retrieve

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { JhiLanguageService } from 'ng-jhipster';
 
 import { Principal, AccountService, JhiLanguageHelper } from 'app/core';
@@ -17,7 +18,8 @@ export class SettingsComponent implements OnInit {
         private account: AccountService,
         private principal: Principal,
         private languageService: JhiLanguageService,
-        private languageHelper: JhiLanguageHelper
+        private languageHelper: JhiLanguageHelper,
+        private router: Router
     ) {}
 
     ngOnInit() {
@@ -41,6 +43,7 @@ export class SettingsComponent implements OnInit {
                     if (this.settingsAccount.langKey !== current) {
                         this.languageService.changeLanguage(this.settingsAccount.langKey);
                     }
+                    this.gotoParentRegisterStudent();
                 });
             },
             () => {
@@ -48,6 +51,10 @@ export class SettingsComponent implements OnInit {
                 this.error = 'ERROR';
             }
         );
+    }
+
+    private gotoParentRegisterStudent() {
+        this.router.navigate(['parent-student/new']);
     }
 
     copyAccount(account) {

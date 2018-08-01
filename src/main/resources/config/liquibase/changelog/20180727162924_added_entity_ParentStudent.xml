@@ -33,5 +33,13 @@
         </createTable>
         
     </changeSet>
+    
+     <changeSet id="20180727162924-2" author="che">
+        <createIndex tableName="wb_parent_student" indexName="x1_wb_parent_student" unique = "true">
+            <column name="user_id" type="bigint"></column>
+            <column name="student_id" type="bigint"></column>            
+        </createIndex>
+    </changeSet>
+    
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

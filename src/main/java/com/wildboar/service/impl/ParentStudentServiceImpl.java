@@ -61,6 +61,19 @@ public class ParentStudentServiceImpl implements ParentStudentService {
             .map(parentStudentMapper::toDto);
     }
 
+    /**
+     * Get all the parentStudents by CurentUser.
+     *
+     * @param pageable the pagination information
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ParentStudentDTO> findByUserIsCurrentUser(Pageable pageable) {
+        log.debug("Request to get all ParentStudents by CurrentUser");
+        return parentStudentRepository.findByUserIsCurrentUser(pageable)
+            .map(parentStudentMapper::toDto);
+    }
 
     /**
      * Get one parentStudent by id.

@@ -4,8 +4,9 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
 
 import { VERSION } from 'app/app.constants';
-import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from 'app/core';
+import { JhiLanguageHelper, Principal, LoginService } from 'app/core';
 import { ProfileService } from '../profiles/profile.service';
+import { LineLogin} from 'app/shared/login/line.model';
 
 @Component({
     selector: 'jhi-navbar',
@@ -25,7 +26,6 @@ export class NavbarComponent implements OnInit {
         private languageService: JhiLanguageService,
         private languageHelper: JhiLanguageHelper,
         private principal: Principal,
-        private loginModalService: LoginModalService,
         private profileService: ProfileService,
         private router: Router
     ) {
@@ -56,8 +56,14 @@ export class NavbarComponent implements OnInit {
         return this.principal.isAuthenticated();
     }
 
-    login() {
-        this.modalRef = this.loginModalService.open();
+    gotoLine() {
+        this.getLineLoginUrl();
+    }
+
+    private getLineLoginUrl() {
+        this.loginService.getLineLoginUrl().subscribe((res: LineLogin) => {
+            window.location.href = res.lineUrl;
+        });
     }
 
     logout() {

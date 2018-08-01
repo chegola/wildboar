@@ -3,6 +3,8 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginModalService, Principal, Account } from 'app/core';
+import { LoginService } from 'app/core/login/login.service';
+import { LineLogin } from 'app/shared/login/line.model';
 
 @Component({
     selector: 'jhi-home',
@@ -13,7 +15,7 @@ export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
 
-    constructor(private principal: Principal, private loginModalService: LoginModalService, private eventManager: JhiEventManager) {}
+    constructor(private principal: Principal, private loginModalService: LoginModalService, private eventManager: JhiEventManager, private loginService: LoginService) {}
 
     ngOnInit() {
         this.principal.identity().then(account => {
@@ -36,5 +38,15 @@ export class HomeComponent implements OnInit {
 
     login() {
         this.modalRef = this.loginModalService.open();
+    }
+
+    gotoLine() {
+        this.getLineLoginUrl();
+    }
+
+    private getLineLoginUrl() {
+        this.loginService.getLineLoginUrl().subscribe((res: LineLogin) => {
+            window.location.href = res.lineUrl;
+        });
     }
 }

@@ -35,4 +35,8 @@ export class ParentStudentService {
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
+
+    findByParent(): Observable<EntityArrayResponseType> {
+        return this.http.get<IParentStudent[]>(`${this.resourceUrl}/parent`, { observe: 'response' });
+    }
 }

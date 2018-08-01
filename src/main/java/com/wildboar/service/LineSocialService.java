@@ -63,7 +63,9 @@ public class LineSocialService {
 				}				
 				if (profileShouldBeUpdated) {
 					user.get().setImageUrl(imageUrl);
-					user.get().setEmail(email);
+					if (StringUtils.isNotEmpty(email)) {
+						user.get().setEmail(email);						
+					}
 					userRepository.save(user.get());	
 				}					
 				return user.get();
