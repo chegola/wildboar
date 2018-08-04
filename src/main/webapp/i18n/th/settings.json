@@ -1,6 +1,6 @@
 {
     "settings": {
-        "title": "การตั้งค่าสำหรับ [<b>{{username}}</b>]",
+        "title": "กรุณาบันทึกชื่อและนามสกุลผู้ปกครอง",
         "form": {
             "firstname": "ชื่อ",
             "firstname.placeholder": "ใส่ชื่อของคุณ",

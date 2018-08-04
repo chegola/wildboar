@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { JhiAlertService } from 'ng-jhipster';
+import { Observable, Subscription } from 'rxjs';
+import { JhiAlertService, JhiEventManager} from 'ng-jhipster';
 
 import { IParentStudent } from 'app/shared/model/parent-student.model';
 import { ParentStudentService } from './parent-student.service';
@@ -14,7 +14,7 @@ import { StudentService } from 'app/entities/student';
     selector: 'jhi-parent-student-update',
     templateUrl: './parent-student-update.component.html'
 })
-export class ParentStudentUpdateComponent implements OnInit {
+export class ParentStudentUpdateComponent implements OnInit, OnDestroy {
     private _parentStudent: IParentStudent;
     isSaving: boolean;
 
@@ -28,13 +28,16 @@ export class ParentStudentUpdateComponent implements OnInit {
 
     parentStudents: IParentStudent[];
 
+    eventSubscriber: Subscription;
+
     constructor(
         private jhiAlertService: JhiAlertService,
         private parentStudentService: ParentStudentService,
         private userService: UserService,
         private studentService: StudentService,
         private activatedRoute: ActivatedRoute,
-        private principal: Principal
+        private principal: Principal,
+        private eventManager: JhiEventManager
     ) {}
 
     ngOnInit() {
@@ -58,6 +61,11 @@ export class ParentStudentUpdateComponent implements OnInit {
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
+        this.registerChangeInParentStudents();
+    }
+
+    registerChangeInParentStudents() {
+        this.eventSubscriber = this.eventManager.subscribe('parentStudentListModification', response => this.loadByCurrentUser());
     }
 
     loadByCurrentUser() {
@@ -67,6 +75,10 @@ export class ParentStudentUpdateComponent implements OnInit {
                 (res: HttpResponse<IParentStudent[]>) => this.loadParentStudent(res.body),
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
+    }
+
+    ngOnDestroy() {
+        this.eventManager.destroy(this.eventSubscriber);
     }
 
     previousState() {
@@ -101,6 +113,7 @@ export class ParentStudentUpdateComponent implements OnInit {
 
     private onSaveSuccess() {
         this.isSaving = false;
+        this.loadByCurrentUser();
     }
 
     private onSaveError() {

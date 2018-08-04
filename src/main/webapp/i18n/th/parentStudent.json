@@ -5,7 +5,7 @@
             "home": {
                 "title": "Parent Students",
                 "createLabel": "สร้าง Parent Student",
-                "createOrEditLabel": "สร้างหรือแก้ไข Parent Student"
+                "createOrEditLabel": "บันทึกชื่อบุตรหลานของท่าน"
             },
             "created": "Parent Student ถูกสร้างด้วย {{ param }}",
             "updated": "Parent Student ถูกแก้ไขด้วย {{ param }}",

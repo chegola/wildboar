@@ -11,7 +11,12 @@
 
             <div class="alert alert-success" *ngSwitchCase="true">
                 <span *ngIf="account" jhiTranslate="home.logged.message"
-                    translateValues="{username: '{{account.login}}'}"> You are logged in as user "{{account.login}}". </span>
+                    translateValues="{username: '{{account.firstName}} {{account.lastName}}'}"> You are logged in as user "{{account.firstName}}". 
+                </span>
+                <p>
+                <h3>
+                    <a href="http://localhost:9000/api/notify/56279">คลิ๊กเพื่อทดลองส่งข้อความ</a>
+                </h3>
             </div>
 
             <div *ngSwitchCase="false">
