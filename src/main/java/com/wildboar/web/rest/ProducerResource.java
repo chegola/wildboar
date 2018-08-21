@@ -3,10 +3,13 @@ package com.wildboar.web.rest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +24,8 @@ import com.wildboar.repository.StudentRepository;
 @RequestMapping("/api")
 public class ProducerResource {
 
+	private final Logger log = LoggerFactory.getLogger(ProducerResource.class);
+	
 	private MessageChannel channel;
 	private StudentRepository studentRepository;
 
@@ -38,9 +43,10 @@ public class ProducerResource {
 		}
 	}
 
-	@GetMapping("/notify/{studentId}")
+	@PostMapping("/notify/{studentId}")
 	@Timed
 	public void inform(@PathVariable String studentId) {
+			log.info("Receive GET request with studentId:" + studentId);
 			final Student student = studentRepository.findByStudentId(studentId);
 			channel.send(MessageBuilder.withPayload(this.buildMessage(student)).build());
 	}
